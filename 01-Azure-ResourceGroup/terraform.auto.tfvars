@@ -28,6 +28,6 @@ environment = "workshop"
 
 resource_group = "fsa23-infra"
 
-subscription_id = "<ADDYOURSHERE>"
+subscription_id = "7ce3a02b-72a1-46a8-8d0c-a46d54bf4243"
 
 

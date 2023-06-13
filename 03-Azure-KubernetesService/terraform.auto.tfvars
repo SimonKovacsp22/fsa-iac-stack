@@ -5,7 +5,7 @@
 # Standarne sa nacitavaju z Terraform cloud
 
 # Azure account subscription ID (Required)
-subscription_id = "<ADDYOURSHERE>"
+subscription_id = "7ce3a02b-72a1-46a8-8d0c-a46d54bf4243"
 
 # Provide your tenant ID (Required)
 # tenant_id = ""
@@ -38,7 +38,7 @@ resource_name = "fsa23"
 # AK
 # -----------------------------------------------------------------------------
 
-dns_prefix = "monkos"
+dns_prefix = "smiths"
 
 name = "fsa"
 

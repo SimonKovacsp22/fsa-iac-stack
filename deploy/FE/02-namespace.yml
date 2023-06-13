@@ -1,0 +1,62 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: accounts-web
+  namespace: "workshop"
+spec:
+  selector:
+    matchLabels:
+      app: accounts-web
+  template:
+    metadata:
+      labels:
+        app: accounts-web
+    spec:
+      containers:
+      - name: "accounts-web"
+        image: 'fsa23smithregistryhopt22.azurecr.io/fsa/account-web-db:latest'
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8081
+          protocol: "TCP"
+        resources:
+            limits:
+              cpu: '1'
+              memory: 1Gi
+            requests:
+              cpu: '0.5'
+              memory: 512M
+        readinessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8081
+            scheme: HTTP
+          initialDelaySeconds: 10
+          timeoutSeconds: 2
+          periodSeconds: 30
+          successThreshold: 1
+          failureThreshold: 3
+        livenessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8081
+            scheme: HTTP
+          initialDelaySeconds: 60
+          timeoutSeconds: 2
+          periodSeconds: 30
+          successThreshold: 1
+          failureThreshold: 3
+        volumeMounts:
+            - name: config
+              mountPath: /opt/config
+      volumes:
+        - name: config
+          configMap:
+            name: accounts-web-config-map
+      restartPolicy: Always
+  replicas: 1
+  strategy:
+    type: "RollingUpdate"
+    rollingUpdate:
+      maxSurge: "50%"
+      maxUnavailable: "50%"
